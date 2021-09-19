@@ -1,8 +1,7 @@
 use cyclonedds_rs::*;
 use dds_derive::Topic;
-use serde_derive::{Deserialize, Serialize};
 use serde_big_array::*;
-
+use serde_derive::{Deserialize, Serialize};
 
 #[repr(C)]
 #[derive(Deserialize, Serialize, Topic)]
@@ -770,9 +769,27 @@ pub mod geometry_msgs {
         pub header: std_msgs::Header,
         pub twist: Twist,
     }
+
+    /// orientation in free space in quaternion form.
     #[repr(C)]
     #[derive(Deserialize, Serialize, Topic)]
-    pub struct Quaternion {}
+    pub struct Quaternion {
+        pub x: f64,
+        pub y: f64,
+        pub z: f64,
+        pub w: f64,
+    }
+
+    impl Default for Quaternion {
+        fn default() -> Self {
+            Self {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0,
+                w: 1.0,
+            }
+        }
+    }
 }
 pub mod stereo_msgs {
     use super::*;
